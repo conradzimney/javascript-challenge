@@ -11,7 +11,7 @@ function onReady() {
 	var stateSelect = document.getElementById('stateSelect');
 	var option;
 	var idx;
-	for ( idx = 0; idx < usStates.length; idx++) {
+	for (idx = 0; idx < usStates.length; idx++) {
 		option = document.createElement('option');
 		option.innerHTML = usStates[idx].name;
 		option.value = usStates[idx].code;
@@ -44,7 +44,7 @@ function onSubmit(eventObject) {
 	var idx;
 	var fields = ['firstName', 'lastName', 'address1', 'city', 'state'];
 	var formValid = true;
-	for( idx = 0; idx < 5; idx++ ) {
+	for (idx = 0; idx < fields.length; idx++) {
 		formValid &= validateName(signup.elements[fields[idx]]);
 	}
 	if (signup.elements['occupation'].value == 'other') {
@@ -63,9 +63,6 @@ function onSubmit(eventObject) {
 }
 
 function validateName(field) {
-	// FIX THIS REG EXP
-	// var spaceRegExp = new RegExp('/^\S+$/');
-	// THIS IS ALL THAT NEEDS TO BE FIXED
 	if (field.value && field.value.trim() != '') {
 		field.className = 'form-control';
 		return true;
@@ -102,6 +99,7 @@ function validateBirthdate(field) {
 		field.className = 'form-control';
 		if (yearsDiff < 13) {
 			bdMSG.innerHTML = "Sorry, you must be at least 13 years old to sign up.";
+			field.className = 'form-control invalid';
 			return false;
 		} else {
 			bdMSG.innerHTML = '';
@@ -113,8 +111,3 @@ function validateBirthdate(field) {
 		return false;
 	}
 }
-
-
-
-
-
