@@ -5,7 +5,9 @@
 
 "use strict";
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', onReady);
+
+function onReady() {
 	var stateSelect = document.getElementById('stateSelect');
 	var option;
 	var idx;
@@ -36,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	var signup = document.getElementById('signup');
 	signup.addEventListener('submit', onSubmit);
-
-});
+}
 
 function onSubmit(eventObject) {
 	var idx;
@@ -63,9 +64,9 @@ function onSubmit(eventObject) {
 
 function validateName(field) {
 	// FIX THIS REG EXP
-	var spaceRegExp = new RegExp('/[^\s]/');
+	// var spaceRegExp = new RegExp('/^\S+$/');
 	// THIS IS ALL THAT NEEDS TO BE FIXED
-	if (field.value /* && spaceRegExp.test(field.value) */) {
+	if (field.value && field.value.trim() != '') {
 		field.className = 'form-control';
 		return true;
 	} else {
@@ -88,6 +89,7 @@ function validateZip(field) {
 }
 
 function validateBirthdate(field) {
+	var bdMSG = document.getElementById('birthdateMessage');
 	if (field.value) {
 		var today = new Date();
    	 	var bDay = new Date(field.value);
@@ -99,13 +101,14 @@ function validateBirthdate(field) {
     	}
 		field.className = 'form-control';
 		if (yearsDiff < 13) {
-			var bdMSG = document.getElementById('birthdateMessage');
 			bdMSG.innerHTML = "Sorry, you must be at least 13 years old to sign up.";
 			return false;
 		} else {
+			bdMSG.innerHTML = '';
 			return true;
 		}
 	} else {
+		bdMSG.innerHTML = "Please tell me when you were born.";
 		field.className = 'form-control invalid';
 		return false;
 	}
